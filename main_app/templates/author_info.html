@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Info</title>
+
+<style>
+    #author{
+        margin-left: 100px;
+    }
+
+    #authid{
+        font-style: italic;
+        margin-left: 120px;
+        margin-top: -15px;
+    }
+
+    #notes{
+        margin-left: 100px;
+    }
+
+    #booksbyauth{
+        margin-left: 100px;
+    }
+
+    #goauth{
+        margin-left: 200px;
+    }
+    #gobook{
+        margin-left: 50px;
+    }
+    button{
+        margin-top: 20px;
+    }
+
+</style>
+
+
+
+</head>
+
+<body>
+
+    <h1 id='author'>Author Name: {{ the_author_info.first_name }} {{ the_author_info.last_name }} </h1>
+
+    <h2 id='authid'>Author I.D: #{{ the_author_info.id}}</h2>
+
+    <div id='notes'>
+        <h3>Notes:</h3>
+        <p> {{ the_author_info.notes }} </p>
+    </div>
+
+    <div id='booksbyauth'>
+        <h3>Books by author:</h3>
+        {% for books in authors_books %}
+        <h4> - {{ books.title }} </h4>
+        {% endfor %}
+
+        <form action="/update_author_book" method='POST'>
+            {% csrf_token %}
+            <select name="book_id" id="books">
+                <option value='' disabled selected> - select a book - </option>
+                {% for book in all_books %}
+                <option value='{{book.id}}'>{{ book.title }}</option>
+                {% endfor %}
+            </select> <br>
+            <input type="hidden" name="author_id" value="{{ the_author_info.id }}">
+            <button>Add Book</button>
+        </form>
+    </div>
+
+    <div>
+        <a href="/add_author" id='goauth'>Go to authors Homepage</a>
+        <a href="/" id='gobook'>Go to books Homepage</a>
+    </div>
+
+</body>
+
+</html>

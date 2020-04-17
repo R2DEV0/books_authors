@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+
+    <style>
+        #add_book{
+            display: inline-block;
+        }
+
+        #books_table{
+            display: inline-block;
+            margin-left: 150px;
+            vertical-align: top;
+            margin-top: 50px;
+            border: 1px solid black;
+            width: 300px;
+            height: 400px;
+        }
+
+        #info{
+            width: 300px;
+            height: 300px;
+        }
+
+        #headers{
+            text-align: left;
+        }
+
+        #submit_book{
+            display: inline-block;
+            margin-left: 200px;
+            margin-top: 50px;
+        }
+
+        #go{
+            display: inline-block;
+        }
+
+        button{
+            margin-top: 15px;
+            margin-bottom: 50px;
+        }
+
+        .title{
+
+            margin-bottom: 10px;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id='submit_book'>
+        <h1>Add a Book</h1>
+        <form action="submit_book" method= 'POST'>
+            {% csrf_token %}
+            <label for="title" class='title'>Title:</label>
+            <input type="text" name="title" class='title'> <br>
+            <label for="desc">Description:</label>
+            <input type="text" name="desc"> <br>
+            <button>Add Book</button>
+        </form>
+
+        <div id='go'>
+            <a href="/add_author">Go to authors Homepage</a>
+        </div>
+
+    </div>
+
+
+    <div id='books_table'>
+        <table id='info'>
+            <tr id='headers'>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Action</th>
+            </tr>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td><a href="/book_info/{{book.id}}">view</a></td>
+            </tr>
+            {% endfor %}
+
+
+        </table>
+    </div>
+
+
+</body>
+
+</html>

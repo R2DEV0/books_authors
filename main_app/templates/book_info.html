@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Info</title>
+
+    <style>
+
+    #go_authors{
+            margin-left: 230px;
+        }
+
+    #go_books{
+        margin-left: 50px;
+    }
+
+    button{
+        margin-top: 20px;
+    }
+
+    h3{
+        margin-top: 30px;
+    }
+
+    #title{
+        margin-left: 100px;
+    }
+
+    #bookid{
+        margin-left: 120px;
+        font-style: italic;
+        margin-top: -15px;
+    }
+
+    #description{
+        margin-left: 100px;
+    }
+
+    #bookauths{
+        margin-left: 100px;
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1 id='title'>Book: {{ the_book_info.title }} </h1>
+
+    <h2 id='bookid'>Book I.D:  #{{ the_book_info.id }} </h2>
+
+    <div  id='description'>
+        <h3>Book Description:</h3>
+        <p> {{ the_book_info.desc }} </p>
+    </div>
+
+    <div id='bookauths'>
+        <h3>Book's authors:</h3>
+        {% for authors in books_authors %}
+        <h4> - {{ authors.first_name }} {{ authors.last_name }} </h4>
+        {% endfor %}
+
+        <form action="/update_book_author" method='POST'>
+            {% csrf_token %}
+            <select name="author_id" id="author">
+                <option value='' disabled selected> - select an author - </option>
+                {% for author in all_authors %}
+                <option value= '{{author.id}}'>{{author.first_name }} {{ author.last_name }} </option>
+                {% endfor %}
+            </select> <br>
+            <input type="hidden" name="book_id" value="{{ the_book_info.id }}">
+            <button>Add Author</button>
+        </form>
+    </div>
+
+    <div>
+        <a href="/add_author" id='go_authors'>Go to authors Homepage</a> 
+        <a href="/" id='go_books'>Go to books Homepage</a>
+    </div>
+
+
+    <style>
+
+    </style>
+
+
+
+</body>
+
+</html>
